@@ -28,9 +28,6 @@
 using KSP.IO;
 using KSP.UI.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Tac
@@ -78,21 +75,6 @@ namespace Tac
 
         public virtual void SetVisible(bool newValue)
         {
-            if (newValue)
-            {
-                if (!visible)
-                {
-                    RenderingManager.AddToPostDrawQueue(3, new Callback(DrawWindow));
-                }
-            }
-            else
-            {
-                if (visible)
-                {
-                    RenderingManager.RemoveFromPostDrawQueue(3, new Callback(DrawWindow));
-                }
-            }
-
             this.visible = newValue;
         }
 
@@ -200,6 +182,14 @@ namespace Tac
                 resizeStyle.padding = new RectOffset(1, 1, 1, 1);
             }
         }
+		
+		private void OnGUI()
+		{
+			if (visible)
+			{
+				DrawWindow();
+			}
+		}
 
         private void PreDrawWindowContents(int windowId)
         {
